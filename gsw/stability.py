@@ -27,7 +27,7 @@ __all__ = ['Nsquared',
 # In the following, axis=0 matches the Matlab behavior.
 
 @match_args_return
-def Nsquared(SA, CT, p, lat=None, axis=0):
+def Nsquared(SA, CT, p, lat=None, alphabeta=False, axis=0):
     """
     Calculate the square of the buoyancy frequency.
 
@@ -85,7 +85,10 @@ def Nsquared(SA, CT, p, lat=None, axis=0):
     N2 = ((g_local**2) / (specvol_mid * db_to_pa * dp))
     N2 *= (beta_mid*dSA - alpha_mid*dCT)
 
-    return N2, p_mid
+    if alphabeta:
+        return N2, p_mid, N2_alpha, N2_beta
+    else:
+        return N2, p_mid
 
 
 @match_args_return
