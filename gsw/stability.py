@@ -41,6 +41,8 @@ def Nsquared(SA, CT, p, lat=None, alphabeta=False, axis=0):
         Sea pressure (absolute pressure minus 10.1325 dbar), dbar
     lat : array-like, 1-D, optional
         Latitude, degrees.
+    alphabeta : bool, optional
+        Bool key to addionally output N2 alpha and beta
     axis : int, optional
         The dimension along which pressure increases.
 
@@ -83,11 +85,14 @@ def Nsquared(SA, CT, p, lat=None, alphabeta=False, axis=0):
                                                           CT_mid, p_mid)
 
     N2 = ((g_local**2) / (specvol_mid * db_to_pa * dp))
-    N2 *= (beta_mid*dSA - alpha_mid*dCT)
 
     if alphabeta:
+        N2_beta = N2 * beta_mid * dSA
+        N2_alpha = N2 * alpha_mid * dCT 
+        N2 *= (beta_mid*dSA - alpha_mid*dCT)
         return N2, p_mid, N2_alpha, N2_beta
     else:
+        N2 *= (beta_mid*dSA - alpha_mid*dCT)
         return N2, p_mid
 
 
